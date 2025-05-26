@@ -25,26 +25,17 @@ content = request.json()
 # extract articles
 articles = content['articles']
 
-all_titles = '' 
-all_descriptions = ''
+body = '' 
+
 
 for article in articles:
     #print(article['title'])
     try:
-        all_titles = all_titles+ article['title'] + '  \n' 
-    except TypeError:
-        pass
-    #print(article['description'])
-    try:
-        all_descriptions = all_descriptions + article['description']+ '  \n'
+        body = body+ article['title'] + '  \n' + article['description'] +2 * ' \n' 
     except TypeError:
         pass
 
-print(f'all titles are: \n {all_titles}')
-print(f'all descriptions are: \n {all_descriptions}')
-
-all_content = 'Titles: \n'+ all_titles + "\n \n \n" + 'Content: \n' + all_descriptions 
-print(f'This is the content to be sent by email: \n {all_content}')
+print(f'This is the content to be sent by email: \n {body}')
 
 subject = 'This is an automated email which extracted information from newsapi.org, created using Python'
-send_email(context, sender_email, receiver_email, subject , all_content)
+send_email(context, sender_email, receiver_email, subject , body)
