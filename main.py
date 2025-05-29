@@ -1,11 +1,14 @@
 import requests, ssl
 from send_email import send_email
 
-api_key = "12ae71d82c284f77b7116adff4c5c82a"
-
-url = "https://newsapi.org/v2/top-headlines?"\
-       "country=us&category=business&apiKey="\
-        "12ae71d82c284f77b7116adff4c5c82a" 
+topic ='tesla'
+#url = "https://newsapi.org/v2/top-headlines?"\
+#       "country=us&category=business&apiKey="\
+#        "12ae71d82c284f77b7116adff4c5c82a" 
+url = f"https://newsapi.org/v2/everything?q={topic}&"\
+       "from=2025-04-29&sortBy=publishedAt&"\
+       "apiKey=12ae71d82c284f77b7116adff4c5c82a&"\
+       "language=en"
 
 #password = input("Type your password and press enter:")
 sender_email = "sapariuc@gmail.com" 
@@ -27,11 +30,14 @@ articles = content['articles']
 
 body = '' 
 
+L = min(len(articles), 20)
 
-for article in articles:
+for article in articles[:L]:
     #print(article['title'])
     try:
-        body = body+ article['title'] + '  \n' + article['description'] +2 * ' \n' 
+        body = body+ 'Title: '+ article['title'] + '  \n' + \
+        'Content: '+ article['description'] + \
+         ' \n' + 'Link: ' + article['url'] + 2 * ' \n' 
     except TypeError:
         pass
 
